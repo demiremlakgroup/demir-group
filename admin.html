@@ -340,9 +340,9 @@ function doLogin() {
   GH_TOKEN = token;
   sessionStorage.setItem('dg_session', JSON.stringify({user: GH_USER, repo: GH_REPO, token}));
   document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('tb-repo-label').textContent = `${user}/${repo}`;
-  document.getElementById('s-user').value = user;
-  document.getElementById('s-repo').value = repo;
+  document.getElementById('tb-repo-label').textContent = `${GH_USER}/${GH_REPO}`;
+  document.getElementById('s-user').value = GH_USER;
+  document.getElementById('s-repo').value = GH_REPO;
   loadData();
 }
 
