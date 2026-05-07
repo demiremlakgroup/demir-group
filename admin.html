@@ -19,10 +19,8 @@ body{font-family:'DM Sans',sans-serif;background:#f0eee8;color:var(--text-dark);
 /* LOGIN */
 #loginScreen{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:0;}
 .login-box{background:#fff;width:min(440px,92vw);padding:48px 44px;}
-.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:36px;}
-.login-icon{width:38px;height:38px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);}
-.login-text span:first-child{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--navy);display:block;}
-.login-text span:last-child{font-size:10px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;}
+.login-logo{display:flex;align-items:center;justify-content:center;margin-bottom:36px;}
+.login-logo img{height:72px;width:auto;object-fit:contain;}
 .login-box h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px;}
 .login-box p{font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.5;}
 .l-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
@@ -37,9 +35,8 @@ body{font-family:'DM Sans',sans-serif;background:#f0eee8;color:var(--text-dark);
 
 /* TOPBAR */
 .topbar{background:var(--navy);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:1px solid rgba(201,168,76,.18);position:sticky;top:0;z-index:100;}
-.tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.tb-icon{width:32px;height:32px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--navy);}
-.tb-name{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#fff;}
+.tb-logo{display:flex;align-items:center;text-decoration:none;}
+.tb-logo img{height:40px;width:auto;object-fit:contain;}
 .tb-sub{font-size:9px;color:var(--gold-light);letter-spacing:2px;text-transform:uppercase;margin-left:6px;}
 .tb-right{display:flex;align-items:center;gap:16px;}
 .tb-status{font-size:12px;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:6px;}
@@ -156,8 +153,7 @@ tr:hover td{background:#fdfcf9;}
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">
-      <div class="login-icon">D</div>
-      <div class="login-text"><span>Demir Group</span><span>Gayrimenkul – Admin</span></div>
+      <img src="logo.png" alt="Demir Group Gayrimenkul">
     </div>
     <h2>Giriş Yapın</h2>
     <p>İlan yönetim paneline erişmek için GitHub token bilgilerinizi girin.</p>
@@ -180,9 +176,7 @@ tr:hover td{background:#fdfcf9;}
 <!-- TOPBAR -->
 <div class="topbar">
   <a href="index.html" class="tb-logo">
-    <div class="tb-icon">D</div>
-    <span class="tb-name">Demir Group</span>
-    <span class="tb-sub">Admin</span>
+    <img src="logo.png" alt="Demir Group Gayrimenkul">
   </a>
   <div class="tb-right">
     <div class="tb-status"><div class="tb-dot"></div><span id="tb-repo-label">—</span></div>

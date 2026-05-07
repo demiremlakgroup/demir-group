@@ -18,11 +18,9 @@ body{font-family:'DM Sans',sans-serif;color:var(--text-dark);background:var(--cr
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,30,61,0.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:68px;}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.nav-logo-icon{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);}
-.nav-logo-text{display:flex;flex-direction:column;line-height:1.15;}
-.nav-logo-text span:first-child{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#fff;}
-.nav-logo-text span:last-child{font-size:9px;font-weight:300;color:var(--gold-light);letter-spacing:2.5px;text-transform:uppercase;}
+.nav-logo{display:flex;align-items:center;text-decoration:none;}
+.nav-logo img{height:48px;width:auto;object-fit:contain;}
+.ft-brand .nav-logo img{height:64px;}
 .nav-links{display:flex;gap:32px;list-style:none;}
 .nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:14px;transition:color .2s;}
 .nav-links a:hover{color:var(--gold-light);}
@@ -193,8 +191,7 @@ footer{background:var(--navy);border-top:1px solid rgba(201,168,76,.12);padding:
 
 <nav>
   <a href="#" class="nav-logo">
-    <div class="nav-logo-icon">D</div>
-    <div class="nav-logo-text"><span>Demir Group</span><span>Gayrimenkul</span></div>
+    <img src="logo.png" alt="Demir Group Gayrimenkul">
   </a>
   <ul class="nav-links">
     <li><a href="#listings">İlanlar</a></li>
@@ -344,7 +341,7 @@ footer{background:var(--navy);border-top:1px solid rgba(201,168,76,.12);padding:
 <footer>
   <div class="ft-top">
     <div class="ft-brand">
-      <a href="#" class="nav-logo"><div class="nav-logo-icon">D</div><div class="nav-logo-text"><span>Demir Group</span><span>Gayrimenkul</span></div></a>
+      <a href="#" class="nav-logo"><img src="logo.png" alt="Demir Group Gayrimenkul"></a>
       <p>Türkiye'nin güvenilir gayrimenkul danışmanlık şirketi. 2004'ten bu yana binlerce ailenin hayalini gerçeğe dönüştürüyoruz.</p>
       <div class="ft-social">
         <div class="soc-btn"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
