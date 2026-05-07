@@ -341,11 +341,10 @@ async function doLogin() {
   btn.disabled = true; btn.textContent = 'Doğrulanıyor...';
 
   try {
-    const res = await fetch(`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/listings.json`, {
+    const res = await fetch('https://api.github.com/user', {
       headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
     });
-    if (res.status === 401) { showLoginErr('Token geçersiz veya yetkisiz.'); return; }
-    if (res.status === 404) { showLoginErr('Repo bulunamadı. Token repo yetkisi olmayabilir.'); return; }
+    if (res.status === 401) { showLoginErr('Token geçersiz veya süresi dolmuş.'); return; }
     if (!res.ok) { showLoginErr('GitHub bağlantı hatası: ' + res.status); return; }
   } catch(e) {
     showLoginErr('Bağlantı hatası. İnternet bağlantınızı kontrol edin.'); return;
