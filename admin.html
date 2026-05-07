@@ -329,13 +329,29 @@ let editImages = [];
 let currentSection = 'dashboard';
 
 // ── LOGIN ──
-function doLogin() {
+async function doLogin() {
   const token = document.getElementById('inp-token').value.trim();
   const pass  = document.getElementById('inp-pass').value;
   const saved = localStorage.getItem('dg_admin_pass') || DEFAULT_PASS;
 
   if (!token || !pass) { showLoginErr('Tüm alanları doldurun.'); return; }
   if (pass !== saved) { showLoginErr('Admin şifresi hatalı.'); return; }
+
+  const btn = document.querySelector('.btn-login');
+  btn.disabled = true; btn.textContent = 'Doğrulanıyor...';
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/listings.json`, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (res.status === 401) { showLoginErr('Token geçersiz veya yetkisiz.'); return; }
+    if (res.status === 404) { showLoginErr('Repo bulunamadı. Token repo yetkisi olmayabilir.'); return; }
+    if (!res.ok) { showLoginErr('GitHub bağlantı hatası: ' + res.status); return; }
+  } catch(e) {
+    showLoginErr('Bağlantı hatası. İnternet bağlantınızı kontrol edin.'); return;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Giriş Yap →';
+  }
 
   GH_TOKEN = token;
   sessionStorage.setItem('dg_session', JSON.stringify({user: GH_USER, repo: GH_REPO, token}));
