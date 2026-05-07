@@ -161,8 +161,6 @@ tr:hover td{background:#fdfcf9;}
       GitHub Personal Access Token gereklidir.<br>
       <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a> adresinden <strong>repo</strong> yetkili token alın.
     </div>
-    <div class="l-grp"><label>GitHub Kullanıcı Adı</label><input type="text" id="inp-user" placeholder="kullaniciadi" autocomplete="username"></div>
-    <div class="l-grp"><label>Repo Adı</label><input type="text" id="inp-repo" placeholder="demir-group" autocomplete="off"></div>
     <div class="l-grp"><label>Personal Access Token</label><input type="password" id="inp-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="current-password"></div>
     <div class="l-grp"><label>Admin Şifresi</label><input type="password" id="inp-pass" placeholder="Belirlediğiniz şifre" autocomplete="current-password"></div>
     <button class="btn-login" onclick="doLogin()">Giriş Yap →</button>
@@ -324,7 +322,7 @@ const DEFAULT_PASS = 'demir2025'; // İlk giriş şifresi — ayarlardan değiş
 const JSON_PATH = 'listings.json';
 
 // ── STATE ──
-let GH_USER = '', GH_REPO = '', GH_TOKEN = '';
+let GH_USER = 'demiremlakgroup', GH_REPO = 'demir-group', GH_TOKEN = '';
 let listings = [];
 let fileSHA = '';
 let editImages = [];
@@ -332,17 +330,15 @@ let currentSection = 'dashboard';
 
 // ── LOGIN ──
 function doLogin() {
-  const user  = document.getElementById('inp-user').value.trim();
-  const repo  = document.getElementById('inp-repo').value.trim();
   const token = document.getElementById('inp-token').value.trim();
   const pass  = document.getElementById('inp-pass').value;
   const saved = localStorage.getItem('dg_admin_pass') || DEFAULT_PASS;
 
-  if (!user || !repo || !token || !pass) { showLoginErr('Tüm alanları doldurun.'); return; }
+  if (!token || !pass) { showLoginErr('Tüm alanları doldurun.'); return; }
   if (pass !== saved) { showLoginErr('Admin şifresi hatalı.'); return; }
 
-  GH_USER = user; GH_REPO = repo; GH_TOKEN = token;
-  sessionStorage.setItem('dg_session', JSON.stringify({user, repo, token}));
+  GH_TOKEN = token;
+  sessionStorage.setItem('dg_session', JSON.stringify({user: GH_USER, repo: GH_REPO, token}));
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('tb-repo-label').textContent = `${user}/${repo}`;
   document.getElementById('s-user').value = user;
@@ -627,8 +623,8 @@ function showToast(msg, type) {
   const sess = sessionStorage.getItem('dg_session');
   if (sess) {
     try {
-      const {user,repo,token} = JSON.parse(sess);
-      GH_USER=user; GH_REPO=repo; GH_TOKEN=token;
+      const {token} = JSON.parse(sess);
+      GH_TOKEN=token;
       document.getElementById('loginScreen').style.display='none';
       document.getElementById('tb-repo-label').textContent=`${user}/${repo}`;
       document.getElementById('s-user').value=user;
