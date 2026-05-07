@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Demir Group Gayrimenkul</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1e3d;--navy-light:#162d57;--navy-mid:#1e3a6e;
+  --gold:#c9a84c;--gold-light:#e8c97a;--gold-pale:#f5e9c8;
+  --cream:#faf8f3;--white:#fff;
+  --text-dark:#0d1e3d;--text-muted:#5a6b82;
+  --danger:#c0392b;--success:#1a7a4a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:#f0eee8;color:var(--text-dark);min-height:100vh;}
+
+/* LOGIN */
+#loginScreen{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:0;}
+.login-box{background:#fff;width:min(440px,92vw);padding:48px 44px;}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:36px;}
+.login-icon{width:38px;height:38px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);}
+.login-text span:first-child{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--navy);display:block;}
+.login-text span:last-child{font-size:10px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;}
+.login-box h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.login-box p{font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.5;}
+.l-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.l-grp label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);font-weight:500;}
+.l-grp input{padding:12px 14px;border:1px solid rgba(13,30,61,.15);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;color:var(--text-dark);background:var(--cream);}
+.l-grp input:focus{border-color:var(--gold);}
+.login-hint{font-size:11px;color:var(--text-muted);line-height:1.55;margin-bottom:24px;padding:12px;background:var(--gold-pale);border-left:3px solid var(--gold);}
+.login-hint a{color:var(--navy);font-weight:500;}
+.btn-login{background:var(--gold);color:var(--navy);width:100%;padding:13px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.btn-login:hover{background:var(--gold-light);}
+.login-err{color:var(--danger);font-size:13px;margin-top:12px;display:none;}
+
+/* TOPBAR */
+.topbar{background:var(--navy);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:1px solid rgba(201,168,76,.18);position:sticky;top:0;z-index:100;}
+.tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.tb-icon{width:32px;height:32px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--navy);}
+.tb-name{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#fff;}
+.tb-sub{font-size:9px;color:var(--gold-light);letter-spacing:2px;text-transform:uppercase;margin-left:6px;}
+.tb-right{display:flex;align-items:center;gap:16px;}
+.tb-status{font-size:12px;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:6px;}
+.tb-dot{width:7px;height:7px;border-radius:50%;background:#2ecc71;}
+.btn-sm{padding:7px 16px;font-size:12px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-view{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.12);}
+.btn-view:hover{background:rgba(255,255,255,.15);}
+.btn-logout{background:rgba(192,57,43,.15);color:#e88;border:1px solid rgba(192,57,43,.2);}
+.btn-logout:hover{background:rgba(192,57,43,.3);}
+
+/* LAYOUT */
+.layout{display:flex;min-height:calc(100vh - 62px);}
+.sidebar{width:220px;background:#fff;border-right:1px solid rgba(201,168,76,.15);padding:24px 0;flex-shrink:0;}
+.sb-section{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);padding:0 20px;margin:20px 0 8px;}
+.sb-section:first-child{margin-top:0;}
+.sb-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;color:var(--text-muted);cursor:pointer;transition:all .2s;border-left:3px solid transparent;}
+.sb-item:hover{background:var(--cream);color:var(--navy);}
+.sb-item.active{background:var(--gold-pale);color:var(--navy);font-weight:500;border-left-color:var(--gold);}
+.sb-item svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;flex-shrink:0;}
+.sb-count{margin-left:auto;background:var(--navy);color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;}
+
+.main{flex:1;padding:32px;overflow-y:auto;}
+
+/* CARDS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.stat-box{background:#fff;padding:20px 22px;border-top:3px solid transparent;}
+.stat-box.gold{border-top-color:var(--gold);}
+.stat-box.navy{border-top-color:var(--navy);}
+.stat-box.green{border-top-color:#2ecc71;}
+.stat-box.red{border-top-color:var(--danger);}
+.sb-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--navy);line-height:1;}
+.sb-lbl{font-size:12px;color:var(--text-muted);margin-top:5px;}
+
+/* TABLE */
+.panel{background:#fff;margin-bottom:24px;}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid rgba(201,168,76,.15);}
+.panel-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);}
+.btn-add{background:var(--gold);color:var(--navy);padding:9px 20px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px;transition:background .2s;}
+.btn-add:hover{background:var(--gold-light);}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{padding:11px 16px;text-align:left;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);font-weight:500;background:var(--cream);border-bottom:1px solid rgba(201,168,76,.12);}
+td{padding:13px 16px;border-bottom:1px solid rgba(13,30,61,.04);vertical-align:middle;}
+tr:hover td{background:#fdfcf9;}
+.td-img{width:52px;height:42px;object-fit:cover;display:block;background:var(--navy-light);}
+.td-img-ph{width:52px;height:42px;background:var(--navy);display:flex;align-items:center;justify-content:center;}
+.td-img-ph svg{width:18px;height:18px;fill:none;stroke:rgba(201,168,76,.4);stroke-width:1;}
+.badge{display:inline-block;font-size:10px;font-weight:500;letter-spacing:.5px;padding:3px 9px;text-transform:uppercase;}
+.badge.satilik{background:var(--gold-pale);color:#7a5c00;}
+.badge.kiralik{background:#e8eaf6;color:#3949ab;}
+.td-title{font-weight:500;color:var(--navy);}
+.td-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.act-btn{padding:5px 11px;font-size:11px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:4px;}
+.act-edit{background:rgba(13,30,61,.07);color:var(--navy);}
+.act-edit:hover{background:rgba(13,30,61,.14);}
+.act-del{background:rgba(192,57,43,.08);color:var(--danger);}
+.act-del:hover{background:rgba(192,57,43,.2);}
+.no-data{text-align:center;padding:56px;color:var(--text-muted);font-size:14px;}
+.no-data svg{width:40px;height:40px;fill:none;stroke:rgba(201,168,76,.3);stroke-width:1;margin:0 auto 14px;display:block;}
+
+/* FORM PANEL */
+#formPanel{display:none;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:24px;}
+.fg{display:flex;flex-direction:column;gap:6px;}
+.fg.span2{grid-column:1/-1;}
+.fg label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);font-weight:500;}
+.fg input,.fg select,.fg textarea{padding:10px 13px;border:1px solid rgba(13,30,61,.12);background:var(--cream);font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text-dark);outline:none;transition:border-color .2s;appearance:none;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);}
+.fg textarea{resize:vertical;min-height:90px;}
+.section-label{grid-column:1/-1;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:500;padding-bottom:8px;border-bottom:1px solid rgba(201,168,76,.2);margin-top:8px;}
+
+/* Image upload */
+.upload-zone{border:2px dashed rgba(201,168,76,.3);padding:28px;text-align:center;cursor:pointer;background:var(--cream);position:relative;transition:border-color .2s;}
+.upload-zone:hover{border-color:var(--gold);}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-zone svg{width:28px;height:28px;fill:none;stroke:rgba(201,168,76,.5);stroke-width:1;margin:0 auto 8px;display:block;}
+.upload-zone p{font-size:13px;color:var(--text-muted);}
+.img-previews{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.img-prev{position:relative;width:80px;height:64px;}
+.img-prev img{width:100%;height:100%;object-fit:cover;display:block;}
+.img-prev button{position:absolute;top:-6px;right:-6px;width:18px;height:18px;background:var(--danger);border:none;border-radius:50%;cursor:pointer;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;}
+
+.form-footer{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-top:1px solid rgba(201,168,76,.15);}
+.form-footer-left{font-size:12px;color:var(--text-muted);}
+.form-footer-right{display:flex;gap:10px;}
+.btn-cancel{background:transparent;border:1px solid rgba(13,30,61,.15);padding:9px 22px;font-size:13px;cursor:pointer;color:var(--text-muted);font-family:'DM Sans',sans-serif;}
+.btn-cancel:hover{border-color:var(--navy);color:var(--navy);}
+.btn-save{background:var(--gold);color:var(--navy);padding:10px 26px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px;transition:background .2s;}
+.btn-save:hover{background:var(--gold-light);}
+.btn-save:disabled{opacity:.5;cursor:not-allowed;}
+
+/* SETTINGS PANEL */
+#settingsPanel{display:none;padding:24px;}
+.settings-box{background:#fff;padding:28px;margin-bottom:16px;}
+.settings-box h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid rgba(201,168,76,.15);}
+.settings-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:13px 22px;font-size:13px;z-index:500;transform:translateY(50px);opacity:0;transition:all .3s;pointer-events:none;border-left:3px solid var(--gold);max-width:340px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.err{border-left-color:var(--danger);}
+
+/* Overlay loader */
+.overlay{display:none;position:fixed;inset:0;background:rgba(13,30,61,.55);z-index:400;align-items:center;justify-content:center;flex-direction:column;gap:16px;}
+.overlay.show{display:flex;}
+.overlay p{color:#fff;font-size:14px;}
+.big-spinner{width:40px;height:40px;border:3px solid rgba(201,168,76,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-icon">D</div>
+      <div class="login-text"><span>Demir Group</span><span>Gayrimenkul – Admin</span></div>
+    </div>
+    <h2>Giriş Yapın</h2>
+    <p>İlan yönetim paneline erişmek için GitHub token bilgilerinizi girin.</p>
+    <div class="login-hint">
+      GitHub Personal Access Token gereklidir.<br>
+      <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a> adresinden <strong>repo</strong> yetkili token alın.
+    </div>
+    <div class="l-grp"><label>GitHub Kullanıcı Adı</label><input type="text" id="inp-user" placeholder="kullaniciadi" autocomplete="username"></div>
+    <div class="l-grp"><label>Repo Adı</label><input type="text" id="inp-repo" placeholder="demir-group" autocomplete="off"></div>
+    <div class="l-grp"><label>Personal Access Token</label><input type="password" id="inp-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="current-password"></div>
+    <div class="l-grp"><label>Admin Şifresi</label><input type="password" id="inp-pass" placeholder="Belirlediğiniz şifre" autocomplete="current-password"></div>
+    <button class="btn-login" onclick="doLogin()">Giriş Yap →</button>
+    <div class="login-err" id="loginErr">Şifre veya bilgiler hatalı. Lütfen kontrol edin.</div>
+  </div>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"><div class="big-spinner"></div><p id="overlayMsg">Kaydediliyor...</p></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html" class="tb-logo">
+    <div class="tb-icon">D</div>
+    <span class="tb-name">Demir Group</span>
+    <span class="tb-sub">Admin</span>
+  </a>
+  <div class="tb-right">
+    <div class="tb-status"><div class="tb-dot"></div><span id="tb-repo-label">—</span></div>
+    <button class="btn-sm btn-view" onclick="window.open('index.html','_blank')">← Siteyi Gör</button>
+    <button class="btn-sm btn-logout" onclick="logout()">Çıkış</button>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+  <div class="sidebar">
+    <div class="sb-section">Panel</div>
+    <div class="sb-item active" onclick="showSection('dashboard',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </div>
+    <div class="sb-section">İlanlar</div>
+    <div class="sb-item" onclick="showSection('listings',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Tüm İlanlar <span class="sb-count" id="sb-count">0</span>
+    </div>
+    <div class="sb-item" onclick="showSection('listings',this);openForm()">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Yeni İlan Ekle
+    </div>
+    <div class="sb-section">Sistem</div>
+    <div class="sb-item" onclick="showSection('settings',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41"/></svg>
+      Ayarlar
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <div id="dashboardSection">
+      <div class="stats-row">
+        <div class="stat-box gold"><div class="sb-num" id="ds-total">0</div><div class="sb-lbl">Toplam İlan</div></div>
+        <div class="stat-box navy"><div class="sb-num" id="ds-satilik">0</div><div class="sb-lbl">Satılık</div></div>
+        <div class="stat-box green"><div class="sb-num" id="ds-kiralik">0</div><div class="sb-lbl">Kiralık</div></div>
+        <div class="stat-box red"><div class="sb-num" id="ds-types">0</div><div class="sb-lbl">Farklı Tür</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><span class="panel-title">Son Eklenen İlanlar</span><button class="btn-add" onclick="showSection('listings',document.querySelectorAll('.sb-item')[1]);openForm()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Yeni İlan</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Görsel</th><th>İlan</th><th>Tür</th><th>Durum</th><th>Fiyat</th><th>İşlem</th></tr></thead><tbody id="dashTable"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- LISTINGS -->
+    <div id="listingsSection" style="display:none;">
+      <div class="panel" id="tablePanel">
+        <div class="panel-head">
+          <span class="panel-title">Tüm İlanlar</span>
+          <button class="btn-add" onclick="openForm()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Yeni İlan Ekle</button>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>Görsel</th><th>İlan Başlığı</th><th>Tür</th><th>Durum</th><th>Fiyat</th><th>Konum</th><th>İşlem</th></tr></thead><tbody id="mainTable"></tbody></table></div>
+      </div>
+      <div class="panel" id="formPanel">
+        <div class="panel-head">
+          <span class="panel-title" id="formTitle">Yeni İlan Ekle</span>
+          <button class="btn-cancel" onclick="closeForm()">✕ İptal</button>
+        </div>
+        <div class="form-grid">
+          <input type="hidden" id="editIdx" value="">
+          <div class="section-label">Temel Bilgiler</div>
+          <div class="fg"><label>İlan Başlığı *</label><input type="text" id="f-title" placeholder="Deniz Manzaralı 3+1 Daire"></div>
+          <div class="fg"><label>Durum *</label><select id="f-status"><option>Satılık</option><option>Kiralık</option></select></div>
+          <div class="fg"><label>Mülk Türü *</label><select id="f-type"><option>Daire</option><option>Villa</option><option>Yazlık</option><option>Arsa</option><option>İşyeri</option><option>Ofis</option><option>Diğer</option></select></div>
+          <div class="fg"><label>Fiyat *</label><input type="text" id="f-price" placeholder="4.500.000 veya 25.000/ay"></div>
+
+          <div class="section-label">Konum</div>
+          <div class="fg"><label>İlçe / Semt</label><input type="text" id="f-district" placeholder="Kadıköy"></div>
+          <div class="fg"><label>Şehir</label><input type="text" id="f-city" placeholder="İstanbul"></div>
+
+          <div class="section-label">Özellikler</div>
+          <div class="fg"><label>Oda Sayısı</label><input type="text" id="f-rooms" placeholder="3+1"></div>
+          <div class="fg"><label>Alan (m²)</label><input type="number" id="f-sqm" placeholder="125"></div>
+          <div class="fg"><label>Kat</label><input type="text" id="f-floor" placeholder="4. Kat"></div>
+          <div class="fg"><label>Bina Yaşı</label><input type="text" id="f-age" placeholder="Sıfır"></div>
+          <div class="fg"><label>Banyo</label><input type="number" id="f-bath" placeholder="2"></div>
+          <div class="fg"><label>Otopark</label><select id="f-parking"><option value="">Yok</option><option>Açık</option><option>Kapalı</option></select></div>
+
+          <div class="section-label">Açıklama</div>
+          <div class="fg span2"><label>İlan Açıklaması</label><textarea id="f-desc" placeholder="Mülk hakkında detaylı bilgi..."></textarea></div>
+          <div class="fg"><label>Öne Çıkan Özellikler</label><input type="text" id="f-features" placeholder="Havuz, Deniz manzarası..."></div>
+          <div class="fg"><label>Sorumlu Danışman</label><input type="text" id="f-agent" placeholder="Ahmet Demir"></div>
+
+          <div class="section-label">Görseller</div>
+          <div class="fg span2">
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" accept="image/*" multiple onchange="handleImgs(event)">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p>Fotoğraf yüklemek için tıklayın veya sürükleyin</p>
+              <small style="font-size:11px;color:var(--text-muted);margin-top:4px;display:block;">JPG, PNG – Maks 10 fotoğraf · Görseller base64 olarak JSON'a eklenir</small>
+            </div>
+            <div class="img-previews" id="imgPreviews"></div>
+          </div>
+        </div>
+        <div class="form-footer">
+          <span class="form-footer-left" id="formStatus">* Zorunlu alanlar</span>
+          <div class="form-footer-right">
+            <button class="btn-cancel" onclick="closeForm()">İptal</button>
+            <button class="btn-save" id="saveBtn" onclick="saveListing()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Kaydet & Yayınla
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settingsSection" style="display:none;">
+      <div class="settings-box">
+        <h3>GitHub Bağlantısı</h3>
+        <div class="settings-row">
+          <div class="fg"><label>GitHub Kullanıcı Adı</label><input type="text" id="s-user" readonly style="background:#eee;cursor:not-allowed;"></div>
+          <div class="fg"><label>Repo Adı</label><input type="text" id="s-repo" readonly style="background:#eee;cursor:not-allowed;"></div>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">Token bilgileri sadece bu tarayıcı oturumunda saklanır. Sayfayı kapattığınızda temizlenir.</p>
+      </div>
+      <div class="settings-box">
+        <h3>Admin Şifresi Değiştir</h3>
+        <div class="settings-row">
+          <div class="fg"><label>Mevcut Şifre</label><input type="password" id="old-pass"></div>
+          <div class="fg"><label>Yeni Şifre</label><input type="password" id="new-pass"></div>
+        </div>
+        <button class="btn-add" onclick="changePass()">Şifreyi Güncelle</button>
+      </div>
+      <div class="settings-box">
+        <h3>Veri Yönetimi</h3>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">listings.json dosyasını doğrudan GitHub üzerinden de düzenleyebilirsiniz.</p>
+        <button class="btn-add" onclick="openGitHub()">GitHub'da Aç →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──
+const DEFAULT_PASS = 'demir2025'; // İlk giriş şifresi — ayarlardan değiştirin
+const JSON_PATH = 'listings.json';
+
+// ── STATE ──
+let GH_USER = '', GH_REPO = '', GH_TOKEN = '';
+let listings = [];
+let fileSHA = '';
+let editImages = [];
+let currentSection = 'dashboard';
+
+// ── LOGIN ──
+function doLogin() {
+  const user  = document.getElementById('inp-user').value.trim();
+  const repo  = document.getElementById('inp-repo').value.trim();
+  const token = document.getElementById('inp-token').value.trim();
+  const pass  = document.getElementById('inp-pass').value;
+  const saved = localStorage.getItem('dg_admin_pass') || DEFAULT_PASS;
+
+  if (!user || !repo || !token || !pass) { showLoginErr('Tüm alanları doldurun.'); return; }
+  if (pass !== saved) { showLoginErr('Admin şifresi hatalı.'); return; }
+
+  GH_USER = user; GH_REPO = repo; GH_TOKEN = token;
+  sessionStorage.setItem('dg_session', JSON.stringify({user, repo, token}));
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('tb-repo-label').textContent = `${user}/${repo}`;
+  document.getElementById('s-user').value = user;
+  document.getElementById('s-repo').value = repo;
+  loadData();
+}
+
+function showLoginErr(msg) {
+  const el = document.getElementById('loginErr');
+  el.textContent = msg; el.style.display = 'block';
+  setTimeout(()=>el.style.display='none', 4000);
+}
+
+function logout() {
+  sessionStorage.removeItem('dg_session');
+  location.reload();
+}
+
+// ── LOAD ──
+async function loadData() {
+  showOverlay('İlanlar yükleniyor...');
+  try {
+    const res = await ghFetch('GET');
+    if (res.status === 404) { listings = []; fileSHA = ''; }
+    else {
+      const data = await res.json();
+      fileSHA = data.sha;
+      listings = JSON.parse(atob(data.content.replace(/\n/g,'')));
+    }
+  } catch(e) { listings = []; }
+  hideOverlay();
+  renderAll();
+}
+
+// ── GITHUB API ──
+async function ghFetch(method, body) {
+  const url = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${JSON_PATH}`;
+  const opts = {
+    method,
+    headers: {
+      'Authorization': `token ${GH_TOKEN}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.github.v3+json'
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  return fetch(url, opts);
+}
+
+async function saveToGitHub() {
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(listings, null, 2))));
+  const body = {
+    message: `İlan güncellendi – ${new Date().toLocaleString('tr-TR')}`,
+    content,
+    ...(fileSHA ? { sha: fileSHA } : {})
+  };
+  const res = await ghFetch('PUT', body);
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || 'GitHub API hatası');
+  }
+  const data = await res.json();
+  fileSHA = data.content.sha;
+}
+
+// ── RENDER ──
+function renderAll() {
+  const total = listings.length;
+  const satilik = listings.filter(l=>l.status==='Satılık').length;
+  const kiralik = listings.filter(l=>l.status==='Kiralık').length;
+  const types = new Set(listings.map(l=>l.type)).size;
+
+  document.getElementById('ds-total').textContent = total;
+  document.getElementById('ds-satilik').textContent = satilik;
+  document.getElementById('ds-kiralik').textContent = kiralik;
+  document.getElementById('ds-types').textContent = types;
+  document.getElementById('sb-count').textContent = total;
+
+  renderTable('dashTable', listings.slice(0, 5), true);
+  renderTable('mainTable', listings, false);
+}
+
+function renderTable(id, data, compact) {
+  const tbody = document.getElementById(id);
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="no-data"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Henüz ilan eklenmedi.</div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.map((l, i) => {
+    const realIdx = listings.indexOf(l);
+    const imgHtml = l.images && l.images.length
+      ? `<img class="td-img" src="${l.images[0]}" alt="">`
+      : `<div class="td-img-ph"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>`;
+    return `<tr>
+      <td>${imgHtml}</td>
+      <td><div class="td-title">${l.title}</div><div class="td-sub">${l.type}${l.rooms?' · '+l.rooms:''}${l.sqm?' · '+l.sqm+' m²':''}</div></td>
+      <td>${l.type}</td>
+      <td><span class="badge ${l.status==='Kiralık'?'kiralik':'satilik'}">${l.status}</span></td>
+      <td style="font-weight:500;white-space:nowrap;">${l.price}${l.status==='Kiralık'?' /ay':' TL'}</td>
+      ${compact ? '' : `<td style="font-size:12px;color:var(--text-muted);">${[l.district,l.city].filter(Boolean).join(', ')||'—'}</td>`}
+      <td><button class="act-btn act-edit" onclick="editListing(${realIdx})">Düzenle</button><button class="act-btn act-del" onclick="deleteListing(${realIdx})">Sil</button></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── SECTIONS ──
+function showSection(name, btn) {
+  ['dashboard','listings','settings'].forEach(s => {
+    document.getElementById(s+'Section').style.display = s===name ? 'block' : 'none';
+  });
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  currentSection = name;
+}
+
+// ── FORM ──
+function openForm(idx) {
+  document.getElementById('tablePanel').style.display = 'none';
+  document.getElementById('formPanel').style.display = 'block';
+  document.getElementById('editIdx').value = idx !== undefined ? idx : '';
+  document.getElementById('formTitle').textContent = idx !== undefined ? 'İlanı Düzenle' : 'Yeni İlan Ekle';
+
+  if (idx !== undefined) {
+    const l = listings[idx];
+    document.getElementById('f-title').value = l.title||'';
+    document.getElementById('f-status').value = l.status||'Satılık';
+    document.getElementById('f-type').value = l.type||'Daire';
+    document.getElementById('f-price').value = l.price||'';
+    document.getElementById('f-district').value = l.district||'';
+    document.getElementById('f-city').value = l.city||'';
+    document.getElementById('f-rooms').value = l.rooms||'';
+    document.getElementById('f-sqm').value = l.sqm||'';
+    document.getElementById('f-floor').value = l.floor||'';
+    document.getElementById('f-age').value = l.age||'';
+    document.getElementById('f-bath').value = l.bath||'';
+    document.getElementById('f-parking').value = l.parking||'';
+    document.getElementById('f-desc').value = l.desc||'';
+    document.getElementById('f-features').value = l.features||'';
+    document.getElementById('f-agent').value = l.agent||'';
+    editImages = [...(l.images||[])];
+  } else {
+    ['f-title','f-price','f-district','f-city','f-rooms','f-sqm','f-floor','f-age','f-bath','f-desc','f-features','f-agent'].forEach(id=>{document.getElementById(id).value='';});
+    document.getElementById('f-status').value='Satılık';
+    document.getElementById('f-type').value='Daire';
+    document.getElementById('f-parking').value='';
+    editImages = [];
+  }
+  renderImgPreviews();
+  document.getElementById('formPanel').scrollIntoView({behavior:'smooth'});
+}
+
+function closeForm() {
+  document.getElementById('tablePanel').style.display = 'block';
+  document.getElementById('formPanel').style.display = 'none';
+  editImages = [];
+  renderImgPreviews();
+}
+
+function handleImgs(e) {
+  const files = Array.from(e.target.files).slice(0, 10 - editImages.length);
+  let loaded = 0;
+  files.forEach(f => {
+    const r = new FileReader();
+    r.onload = ev => { editImages.push(ev.target.result); loaded++; if(loaded===files.length) renderImgPreviews(); };
+    r.readAsDataURL(f);
+  });
+  e.target.value = '';
+}
+
+function renderImgPreviews() {
+  document.getElementById('imgPreviews').innerHTML = editImages.map((src,i)=>
+    `<div class="img-prev"><img src="${src}" alt=""><button onclick="editImages.splice(${i},1);renderImgPreviews()">✕</button></div>`
+  ).join('');
+}
+
+async function saveListing() {
+  const title = document.getElementById('f-title').value.trim();
+  const price = document.getElementById('f-price').value.trim();
+  if (!title||!price) { showToast('⚠ Başlık ve fiyat zorunludur.','err'); return; }
+
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  document.getElementById('formStatus').textContent = '⏳ GitHub\'a kaydediliyor...';
+
+  const data = {
+    title, price,
+    status: document.getElementById('f-status').value,
+    type: document.getElementById('f-type').value,
+    district: document.getElementById('f-district').value.trim(),
+    city: document.getElementById('f-city').value.trim(),
+    rooms: document.getElementById('f-rooms').value.trim(),
+    sqm: document.getElementById('f-sqm').value.trim(),
+    floor: document.getElementById('f-floor').value.trim(),
+    age: document.getElementById('f-age').value.trim(),
+    bath: document.getElementById('f-bath').value.trim(),
+    parking: document.getElementById('f-parking').value,
+    desc: document.getElementById('f-desc').value.trim(),
+    features: document.getElementById('f-features').value.trim(),
+    agent: document.getElementById('f-agent').value.trim(),
+    images: [...editImages],
+    updatedAt: new Date().toISOString()
+  };
+
+  const idx = document.getElementById('editIdx').value;
+  if (idx !== '') {
+    listings[parseInt(idx)] = data;
+  } else {
+    data.createdAt = new Date().toISOString();
+    listings.unshift(data);
+  }
+
+  showOverlay('GitHub\'a kaydediliyor...');
+  try {
+    await saveToGitHub();
+    hideOverlay();
+    showToast(idx !== '' ? '✓ İlan güncellendi ve yayınlandı.' : '✓ Yeni ilan eklendi ve yayınlandı.');
+    closeForm();
+    renderAll();
+  } catch(e) {
+    hideOverlay();
+    showToast('❌ Hata: ' + e.message, 'err');
+    if (idx !== '') listings[parseInt(idx)] = data;
+    else listings.shift();
+  }
+
+  btn.disabled = false;
+  document.getElementById('formStatus').textContent = '* Zorunlu alanlar';
+}
+
+async function deleteListing(idx) {
+  if (!confirm(`"${listings[idx].title}" ilanını silmek istediğinize emin misiniz?`)) return;
+  listings.splice(idx, 1);
+  showOverlay('Siliniyor...');
+  try {
+    await saveToGitHub();
+    hideOverlay();
+    showToast('🗑 İlan silindi.');
+    renderAll();
+  } catch(e) {
+    hideOverlay();
+    showToast('❌ Silinemedi: ' + e.message,'err');
+    location.reload();
+  }
+}
+
+function editListing(idx) {
+  showSection('listings', document.querySelectorAll('.sb-item')[1]);
+  openForm(idx);
+}
+
+// ── SETTINGS ──
+function changePass() {
+  const old = document.getElementById('old-pass').value;
+  const nw  = document.getElementById('new-pass').value;
+  const saved = localStorage.getItem('dg_admin_pass') || DEFAULT_PASS;
+  if (old !== saved) { showToast('Mevcut şifre hatalı.','err'); return; }
+  if (nw.length < 6) { showToast('Yeni şifre en az 6 karakter olmalı.','err'); return; }
+  localStorage.setItem('dg_admin_pass', nw);
+  document.getElementById('old-pass').value = '';
+  document.getElementById('new-pass').value = '';
+  showToast('✓ Şifre güncellendi.');
+}
+
+function openGitHub() {
+  window.open(`https://github.com/${GH_USER}/${GH_REPO}/blob/main/${JSON_PATH}`, '_blank');
+}
+
+// ── HELPERS ──
+function showOverlay(msg) { document.getElementById('overlayMsg').textContent = msg; document.getElementById('overlay').classList.add('show'); }
+function hideOverlay() { document.getElementById('overlay').classList.remove('show'); }
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type==='err'?' err':'');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+// ── INIT: check session ──
+(function init() {
+  const sess = sessionStorage.getItem('dg_session');
+  if (sess) {
+    try {
+      const {user,repo,token} = JSON.parse(sess);
+      GH_USER=user; GH_REPO=repo; GH_TOKEN=token;
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('tb-repo-label').textContent=`${user}/${repo}`;
+      document.getElementById('s-user').value=user;
+      document.getElementById('s-repo').value=repo;
+      loadData();
+    } catch(e) { /* show login */ }
+  }
+})();
+</script>
+</body>
+</html>

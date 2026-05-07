@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demir Group Gayrimenkul</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0d1e3d; --navy-light:#162d57; --navy-mid:#1e3a6e;
+  --gold:#c9a84c; --gold-light:#e8c97a; --gold-pale:#f5e9c8;
+  --cream:#faf8f3; --white:#ffffff;
+  --text-dark:#0d1e3d; --text-muted:#5a6b82;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;color:var(--text-dark);background:var(--cream);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,30,61,0.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:68px;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-icon{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1.15;}
+.nav-logo-text span:first-child{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#fff;}
+.nav-logo-text span:last-child{font-size:9px;font-weight:300;color:var(--gold-light);letter-spacing:2.5px;text-transform:uppercase;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:14px;transition:color .2s;}
+.nav-links a:hover{color:var(--gold-light);}
+.btn-gold{background:var(--gold);color:var(--navy);padding:9px 22px;font-size:13px;font-weight:500;border:none;cursor:pointer;letter-spacing:.5px;transition:background .2s;text-decoration:none;display:inline-block;}
+.btn-gold:hover{background:var(--gold-light);}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--navy);display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 5% 80px;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(201,168,76,.07) 0%,transparent 60%);}
+.hero-grid{position:absolute;inset:0;opacity:.035;background-image:linear-gradient(rgba(201,168,76,1) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,1) 1px,transparent 1px);background-size:55px 55px;}
+.hero-content{position:relative;z-index:2;max-width:600px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(201,168,76,.35);padding:5px 15px;margin-bottom:30px;}
+.hero-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-badge span{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-light);font-weight:400;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(34px,5vw,62px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:22px;}
+.hero h1 em{color:var(--gold);font-style:italic;}
+.hero p{font-size:16px;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:40px;font-weight:300;max-width:480px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-outline-w{background:transparent;color:#fff;padding:12px 28px;font-size:13px;border:1px solid rgba(255,255,255,.25);cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:border-color .2s,color .2s;}
+.btn-outline-w:hover{border-color:var(--gold);color:var(--gold-light);}
+.hero-stats{position:absolute;right:5%;top:50%;transform:translateY(-50%);z-index:2;display:flex;flex-direction:column;gap:2px;}
+.stat-card{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.12);padding:20px 26px;min-width:170px;}
+.stat-num{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:var(--gold);line-height:1;}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;margin-top:5px;}
+
+/* SEARCH */
+.search-sec{background:#fff;border-top:3px solid var(--gold);padding:0 5%;}
+.search-bar{display:flex;align-items:stretch;max-width:980px;margin:0 auto;}
+.s-tab{padding:19px 26px;font-size:13px;font-weight:500;background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;color:var(--text-muted);transition:all .2s;margin-bottom:-3px;font-family:'DM Sans',sans-serif;}
+.s-tab.active{color:var(--navy);border-bottom-color:var(--gold);}
+.s-inputs{display:flex;flex:1;gap:1px;background:rgba(201,168,76,.25);}
+.s-inputs input,.s-inputs select{flex:1;padding:17px 18px;border:none;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text-dark);background:var(--cream);outline:none;border-right:1px solid rgba(201,168,76,.12);}
+.s-inputs select{appearance:none;cursor:pointer;}
+.s-btn{background:var(--gold);color:var(--navy);padding:17px 30px;border:none;cursor:pointer;font-size:14px;font-weight:500;letter-spacing:.5px;white-space:nowrap;transition:background .2s;font-family:'DM Sans',sans-serif;}
+.s-btn:hover{background:var(--gold-light);}
+
+/* SECTION */
+.sec-head{text-align:center;margin-bottom:50px;}
+.sec-eye{display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:500;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,42px);font-weight:700;color:var(--navy);line-height:1.2;}
+.sec-line{width:44px;height:2px;background:var(--gold);margin:16px auto 0;}
+
+/* FEATURES */
+.features{padding:90px 5%;background:var(--cream);}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.feat-card{background:#fff;padding:36px 24px;border-bottom:3px solid transparent;transition:border-color .3s,transform .2s;}
+.feat-card:hover{border-bottom-color:var(--gold);transform:translateY(-4px);}
+.feat-icon{width:48px;height:48px;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.feat-icon svg{width:22px;height:22px;fill:none;stroke:var(--gold);stroke-width:1.5;}
+.feat-card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--navy);margin-bottom:10px;}
+.feat-card p{font-size:13px;color:var(--text-muted);line-height:1.65;}
+
+/* LISTINGS */
+.listings-sec{padding:90px 5%;background:#fff;}
+.l-filter{display:flex;gap:8px;margin-bottom:44px;flex-wrap:wrap;}
+.f-btn{padding:8px 20px;font-size:13px;font-family:'DM Sans',sans-serif;background:transparent;border:1px solid rgba(13,30,61,.15);cursor:pointer;color:var(--text-muted);transition:all .2s;}
+.f-btn.active,.f-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.l-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;min-height:200px;}
+.l-loading{grid-column:1/-1;display:flex;align-items:center;justify-content:center;padding:80px;gap:12px;color:var(--text-muted);font-size:14px;}
+.spinner{width:20px;height:20px;border:2px solid rgba(201,168,76,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.l-empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-muted);}
+.l-empty svg{width:48px;height:48px;fill:none;stroke:rgba(201,168,76,.4);stroke-width:1;margin:0 auto 16px;display:block;}
+.l-card{background:var(--cream);cursor:pointer;transition:transform .2s;}
+.l-card:hover{transform:translateY(-4px);}
+.l-img{height:230px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--navy-mid);}
+.l-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.l-img-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);}
+.l-img-ph svg{width:56px;height:56px;fill:none;stroke:rgba(201,168,76,.3);stroke-width:.8;}
+.l-badge{position:absolute;top:14px;left:14px;font-size:10px;font-weight:500;letter-spacing:1px;padding:5px 11px;text-transform:uppercase;}
+.l-badge.satilik{background:var(--gold);color:var(--navy);}
+.l-badge.kiralik{background:var(--navy);color:var(--gold-light);}
+.l-info{padding:22px;}
+.l-price{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.l-price span{font-size:12px;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-weight:400;}
+.l-title{font-size:14px;font-weight:500;color:var(--text-dark);margin-bottom:7px;}
+.l-loc{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:5px;margin-bottom:14px;}
+.l-loc svg{width:12px;height:12px;fill:none;stroke:var(--gold);stroke-width:2;flex-shrink:0;}
+.l-meta{display:flex;gap:16px;padding-top:14px;border-top:1px solid rgba(201,168,76,.15);}
+.l-meta-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-muted);}
+.l-meta-item svg{width:13px;height:13px;fill:none;stroke:var(--text-muted);stroke-width:1.5;}
+
+/* ABOUT */
+.about{padding:90px 5%;background:var(--navy);display:flex;gap:72px;align-items:center;}
+.about-vis{flex:1;position:relative;min-height:440px;}
+.a-main{position:absolute;width:73%;height:360px;left:0;top:0;background:var(--navy-light);display:flex;align-items:center;justify-content:center;}
+.a-accent{position:absolute;width:52%;height:200px;right:0;bottom:0;background:var(--navy-mid);border:4px solid var(--navy);display:flex;align-items:center;justify-content:center;}
+.a-gold-bar{position:absolute;top:18px;left:-18px;width:3px;height:140px;background:var(--gold);}
+.a-badge{position:absolute;top:-22px;right:22%;background:var(--gold);padding:16px 20px;text-align:center;z-index:2;}
+.a-badge .num{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--navy);line-height:1;}
+.a-badge .lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--navy-light);margin-top:4px;}
+.about-cnt{flex:1;}
+.about-cnt .sec-head{text-align:left;margin-bottom:24px;}
+.about-cnt .sec-line{margin-left:0;}
+.about-cnt p{color:rgba(255,255,255,.6);font-size:15px;line-height:1.75;margin-bottom:18px;font-weight:300;}
+.a-bullets{list-style:none;margin:24px 0;}
+.a-bullets li{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid rgba(201,168,76,.1);color:rgba(255,255,255,.8);font-size:13px;}
+.a-bullet-ico{width:18px;height:18px;background:rgba(201,168,76,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.a-bullet-ico svg{width:11px;height:11px;fill:none;stroke:var(--gold);stroke-width:2;}
+.bldg{opacity:.45;}
+
+/* TESTIMONIALS */
+.testimonials{padding:90px 5%;background:var(--cream);}
+.t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:50px;}
+.t-card{background:#fff;padding:32px 28px;}
+.t-card::before{content:'\201C';font-family:'Playfair Display',serif;font-size:72px;color:var(--gold-pale);line-height:.8;display:block;margin-bottom:18px;}
+.t-card p{font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:24px;font-style:italic;}
+.t-author{display:flex;align-items:center;gap:12px;}
+.t-av{width:40px;height:40px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--gold);flex-shrink:0;}
+.t-name{font-size:13px;font-weight:500;color:var(--navy);}
+.t-role{font-size:11px;color:var(--text-muted);}
+.stars{color:var(--gold);font-size:12px;margin-bottom:4px;}
+
+/* SERVICES */
+.services{padding:90px 5%;background:var(--navy);}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:50px;}
+.srv-card{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.1);padding:40px 28px;transition:background .3s,border-color .3s;}
+.srv-card:hover{background:rgba(201,168,76,.07);border-color:rgba(201,168,76,.35);}
+.srv-num{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:rgba(201,168,76,.18);line-height:1;margin-bottom:20px;}
+.srv-card h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#fff;margin-bottom:12px;}
+.srv-card p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;}
+
+/* CONTACT */
+.contact{padding:90px 5%;background:#fff;}
+.cnt-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;max-width:1060px;margin:0 auto;}
+.cnt-info p{font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:36px;}
+.cnt-det{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:1px solid rgba(201,168,76,.15);}
+.cnt-ico{width:38px;height:38px;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cnt-ico svg{width:17px;height:17px;fill:none;stroke:var(--gold);stroke-width:1.5;}
+.cnt-txt{font-size:13px;color:var(--text-muted);}
+.cnt-txt strong{display:block;font-size:13px;font-weight:500;color:var(--navy);margin-bottom:2px;}
+.cnt-form{background:var(--cream);padding:40px;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.f-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.f-grp label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);font-weight:500;}
+.f-grp input,.f-grp select,.f-grp textarea{padding:12px 14px;border:1px solid rgba(201,168,76,.2);background:#fff;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text-dark);outline:none;transition:border-color .2s;appearance:none;}
+.f-grp input:focus,.f-grp select:focus,.f-grp textarea:focus{border-color:var(--gold);}
+.f-grp textarea{resize:vertical;min-height:100px;}
+
+/* FOOTER */
+footer{background:var(--navy);border-top:1px solid rgba(201,168,76,.12);padding:58px 5% 28px;}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:44px;}
+.ft-brand p{font-size:13px;color:rgba(255,255,255,.4);line-height:1.7;margin:18px 0 24px;font-weight:300;max-width:260px;}
+.ft-social{display:flex;gap:8px;}
+.soc-btn{width:34px;height:34px;border:1px solid rgba(201,168,76,.18);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s;}
+.soc-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.1);}
+.soc-btn svg{width:13px;height:13px;fill:rgba(255,255,255,.45);}
+.ft-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:500;}
+.ft-col ul{list-style:none;}
+.ft-col ul li{margin-bottom:9px;}
+.ft-col ul li a{font-size:13px;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;font-weight:300;}
+.ft-col ul li a:hover{color:var(--gold-light);}
+.ft-bot{border-top:1px solid rgba(255,255,255,.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;}
+.ft-bot p{font-size:12px;color:rgba(255,255,255,.22);}
+.ft-bot a{color:var(--gold);text-decoration:none;}
+
+/* Admin link */
+.admin-link{font-size:11px;color:rgba(201,168,76,.5);text-decoration:none;letter-spacing:1px;}
+.admin-link:hover{color:var(--gold-light);}
+
+/* fade */
+.fi{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
+.fi.v{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">D</div>
+    <div class="nav-logo-text"><span>Demir Group</span><span>Gayrimenkul</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#listings">İlanlar</a></li>
+    <li><a href="#services">Hizmetler</a></li>
+    <li><a href="#about">Hakkımızda</a></li>
+    <li><a href="#contact">İletişim</a></li>
+  </ul>
+  <a href="#contact" class="btn-gold">Danışman Talep Et</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div><div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><div class="hero-dot"></div><span>Türkiye'nin Güvenilir Emlak Partneri</span></div>
+    <h1>Hayalinizdeki<br>Mülkü <em>Birlikte</em><br>Bulalım</h1>
+    <p>Demir Group Gayrimenkul olarak 20 yılı aşkın deneyimimizle satın alma, satma ve kiralama süreçlerinde yanınızdayız.</p>
+    <div class="hero-actions">
+      <a href="#listings" class="btn-gold" style="display:inline-flex;align-items:center;gap:8px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        İlanları İncele
+      </a>
+      <a href="#contact" class="btn-outline-w">Ücretsiz Danışmanlık</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card"><div class="stat-num" id="stat-count">—</div><div class="stat-lbl">Aktif İlan</div></div>
+    <div class="stat-card"><div class="stat-num">98%</div><div class="stat-lbl">Müşteri Memnuniyeti</div></div>
+    <div class="stat-card"><div class="stat-num">20+</div><div class="stat-lbl">Yıl Deneyim</div></div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<section class="search-sec" id="listings">
+  <div class="search-bar">
+    <button class="s-tab active" onclick="setTab(this,'Satılık')">Satılık</button>
+    <button class="s-tab" onclick="setTab(this,'Kiralık')">Kiralık</button>
+    <div class="s-inputs">
+      <input type="text" id="s-loc" placeholder="İl, ilçe veya mahalle...">
+      <select id="s-type">
+        <option value="">Tüm Tipler</option>
+        <option>Daire</option><option>Villa</option><option>Yazlık</option>
+        <option>Arsa</option><option>İşyeri</option><option>Ofis</option>
+      </select>
+    </div>
+    <button class="s-btn" onclick="doSearch()">Ara</button>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="sec-head"><span class="sec-eye">Neden Demir Group?</span><h2 class="sec-title">Fark Yaratan Hizmet Anlayışı</h2><div class="sec-line"></div></div>
+  <div class="feat-grid">
+    <div class="feat-card fi"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>Geniş Portföy</h3><p>Türkiye genelinde 5.000'den fazla seçilmiş gayrimenkul ile doğru mülkü hızla buluyoruz.</p></div>
+    <div class="feat-card fi"><div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3>Hızlı Süreç</h3><p>Tapu işlemleri ve teslimatta tam destek ile bürokratik süreçleri sizin için yönetiyoruz.</p></div>
+    <div class="feat-card fi"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Güvenli İşlem</h3><p>SPK lisanslı danışmanlarımız ve hukuk ekibimizle yasal güvenceniz tam olarak sağlanır.</p></div>
+    <div class="feat-card fi"><div class="feat-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3>Yatırım Danışmanlığı</h3><p>Piyasa analizleri ve bölge bazlı raporlarımız ile en doğru yatırım kararını verin.</p></div>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section class="listings-sec">
+  <div class="sec-head" style="padding-top:10px;"><span class="sec-eye">Güncel İlanlar</span><h2 class="sec-title">Öne Çıkan Mülkler</h2><div class="sec-line"></div></div>
+  <div class="l-filter" id="filterBtns">
+    <button class="f-btn active" onclick="filterListings('',this)">Tümü</button>
+    <button class="f-btn" onclick="filterListings('Daire',this)">Daire</button>
+    <button class="f-btn" onclick="filterListings('Villa',this)">Villa</button>
+    <button class="f-btn" onclick="filterListings('Arsa',this)">Arsa</button>
+    <button class="f-btn" onclick="filterListings('İşyeri',this)">İşyeri</button>
+    <button class="f-btn" onclick="filterListings('Ofis',this)">Ofis</button>
+  </div>
+  <div class="l-grid" id="listingsGrid">
+    <div class="l-loading"><div class="spinner"></div> İlanlar yükleniyor...</div>
+  </div>
+  <div style="text-align:center;margin-top:44px;">
+    <button class="btn-outline-w" id="showMoreBtn" style="display:none;color:var(--navy);border-color:rgba(13,30,61,.2);" onclick="toggleShowAll()">Tüm İlanları Görüntüle →</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-vis fi">
+    <div class="a-gold-bar"></div>
+    <div class="a-main"><svg width="180" height="180" viewBox="0 0 180 180" fill="none" class="bldg"><rect x="35" y="55" width="110" height="125" fill="rgba(201,168,76,.25)"/><rect x="55" y="35" width="70" height="145" fill="rgba(201,168,76,.45)"/><rect x="72" y="15" width="36" height="165" fill="rgba(201,168,76,.65)"/><rect x="63" y="90" width="14" height="18" fill="rgba(255,255,255,.2)"/><rect x="84" y="90" width="14" height="18" fill="rgba(255,255,255,.2)"/><rect x="105" y="90" width="14" height="18" fill="rgba(255,255,255,.2)"/><rect x="80" y="140" width="22" height="40" fill="rgba(13,30,61,.4)"/></svg></div>
+    <div class="a-accent"><svg width="120" height="100" viewBox="0 0 120 100" fill="none" class="bldg"><polygon points="60,8 10,44 10,100 110,100 110,44" fill="rgba(201,168,76,.5)"/><rect x="44" y="62" width="32" height="38" fill="rgba(13,30,61,.45)"/></svg></div>
+    <div class="a-badge"><div class="num">2004</div><div class="lbl">Kuruluş</div></div>
+  </div>
+  <div class="about-cnt">
+    <div class="sec-head"><span class="sec-eye">Hakkımızda</span><h2 class="sec-title" style="color:#fff;">20 Yıllık Deneyim,<br>Binlerce Mutlu Aile</h2><div class="sec-line" style="margin-left:0;"></div></div>
+    <p>Demir Group Gayrimenkul, 2004 yılından bu yana Türkiye'nin önde gelen gayrimenkul şirketlerinden biri olarak faaliyet göstermektedir.</p>
+    <ul class="a-bullets">
+      <li><div class="a-bullet-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Türkiye genelinde <strong style="color:rgba(255,255,255,.9)">12 şube</strong> ve 200+ uzman danışman</span></li>
+      <li><div class="a-bullet-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>SPK, TÜGEM ve GYODER üyeliği ile güvenilir konum</span></li>
+      <li><div class="a-bullet-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>2.400'ün üzerinde başarılı satış ve kiralama işlemi</span></li>
+    </ul>
+    <a href="#contact" class="btn-gold" style="display:inline-flex;margin-top:6px;">Bizi Tanıyın</a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="sec-head"><span class="sec-eye">Müşteri Yorumları</span><h2 class="sec-title">Müşterilerimiz Ne Diyor?</h2><div class="sec-line"></div></div>
+  <div class="t-grid">
+    <div class="t-card fi"><div class="stars">★★★★★</div><p>Danışmanlarımız baştan sona süreci çok profesyonelce yönetti. Tek sorun yaşamadık.</p><div class="t-author"><div class="t-av">AK</div><div><div class="t-name">Ahmet Kaya</div><div class="t-role">Girişimci · İstanbul</div></div></div></div>
+    <div class="t-card fi"><div class="stars">★★★★★</div><p>Yatırım amaçlı mülk arayışımızda sunulan analizler çok değerliydi. Doğru karar verebildim.</p><div class="t-author"><div class="t-av">FY</div><div><div class="t-name">Fatma Yıldız</div><div class="t-role">Doktor · Ankara</div></div></div></div>
+    <div class="t-card fi"><div class="stars">★★★★★</div><p>Yurt dışındayım ama Demir Group sayesinde İstanbul'dan mülk almak hiç zor olmadı.</p><div class="t-author"><div class="t-av">MÖ</div><div><div class="t-name">Mehmet Öztürk</div><div class="t-role">Mühendis · Frankfurt</div></div></div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="sec-head"><span class="sec-eye">Hizmetlerimiz</span><h2 class="sec-title" style="color:#fff;">Neler Sunuyoruz?</h2><div class="sec-line"></div></div>
+  <div class="srv-grid">
+    <div class="srv-card fi"><div class="srv-num">01</div><h3>Gayrimenkul Satış</h3><p>Daire, villa, arsa ve ticari mülklerin satışında uçtan uca danışmanlık.</p></div>
+    <div class="srv-card fi"><div class="srv-num">02</div><h3>Kiralama Hizmetleri</h3><p>Konut ve ticari kiralama süreçlerinde sözleşme yönetimi ve kiracı bulma.</p></div>
+    <div class="srv-card fi"><div class="srv-num">03</div><h3>Yatırım Danışmanlığı</h3><p>Portföy analizi ve yüksek getiri hedefli yatırım stratejileri.</p></div>
+    <div class="srv-card fi"><div class="srv-num">04</div><h3>Değerleme & Ekspertiz</h3><p>Lisanslı uzman ekibimiz ile tarafsız gayrimenkul değerleme raporu.</p></div>
+    <div class="srv-card fi"><div class="srv-num">05</div><h3>Proje Pazarlama</h3><p>Konut projeleri ve ön satış danışmanlığı hizmetleri.</p></div>
+    <div class="srv-card fi"><div class="srv-num">06</div><h3>Hukuki Danışmanlık</h3><p>Tapu devir ve sözleşme hazırlamada avukat destekli hizmet.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="sec-head"><span class="sec-eye">İletişim</span><h2 class="sec-title">Bize Ulaşın</h2><div class="sec-line"></div></div>
+  <div class="cnt-grid">
+    <div class="cnt-info fi">
+      <p>Gayrimenkul alım, satım veya kiralama konusundaki sorularınız için uzman danışmanlarımız sizinle iletişime geçsin. İlk görüşme ücretsizdir.</p>
+      <div class="cnt-det"><div class="cnt-ico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="cnt-txt"><strong>Telefon</strong>+90 (212) 555 00 11</div></div>
+      <div class="cnt-det"><div class="cnt-ico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="cnt-txt"><strong>E-posta</strong>info@demirgroupgayrimenkul.com</div></div>
+      <div class="cnt-det"><div class="cnt-ico"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="cnt-txt"><strong>Adres</strong>Levent Mah. Büyükdere Cad. No:145, Beşiktaş, İstanbul</div></div>
+    </div>
+    <div class="cnt-form fi">
+      <div class="f-row">
+        <div class="f-grp"><label>Ad Soyad</label><input type="text" placeholder="Adınız Soyadınız"></div>
+        <div class="f-grp"><label>Telefon</label><input type="text" placeholder="+90 5XX XXX XX XX"></div>
+      </div>
+      <div class="f-grp"><label>E-posta</label><input type="email" placeholder="mail@adresiniz.com"></div>
+      <div class="f-grp"><label>Hizmet</label><select><option>Satılık Mülk Arıyorum</option><option>Kiralık Mülk Arıyorum</option><option>Mülkümü Satmak İstiyorum</option><option>Yatırım Danışmanlığı</option></select></div>
+      <div class="f-grp"><label>Mesaj</label><textarea placeholder="Aradığınız mülk veya sorularınız hakkında bilgi verin..."></textarea></div>
+      <button class="btn-gold" style="width:100%;padding:14px;display:block;text-align:center;">Danışman Talep Et →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-top">
+    <div class="ft-brand">
+      <a href="#" class="nav-logo"><div class="nav-logo-icon">D</div><div class="nav-logo-text"><span>Demir Group</span><span>Gayrimenkul</span></div></a>
+      <p>Türkiye'nin güvenilir gayrimenkul danışmanlık şirketi. 2004'ten bu yana binlerce ailenin hayalini gerçeğe dönüştürüyoruz.</p>
+      <div class="ft-social">
+        <div class="soc-btn"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+        <div class="soc-btn"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        <div class="soc-btn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+      </div>
+    </div>
+    <div class="ft-col"><h4>Hizmetler</h4><ul><li><a href="#">Satılık Mülkler</a></li><li><a href="#">Kiralık Mülkler</a></li><li><a href="#">Yatırım Danışmanlığı</a></li><li><a href="#">Değerleme</a></li></ul></div>
+    <div class="ft-col"><h4>Kurumsal</h4><ul><li><a href="#">Hakkımızda</a></li><li><a href="#">Ekibimiz</a></li><li><a href="#">Kariyer</a></li><li><a href="admin.html" class="admin-link">⚙ Admin</a></li></ul></div>
+    <div class="ft-col"><h4>Şubeler</h4><ul><li><a href="#">İstanbul – Levent</a></li><li><a href="#">Ankara – Çankaya</a></li><li><a href="#">İzmir – Karşıyaka</a></li><li><a href="#">Antalya</a></li></ul></div>
+  </div>
+  <div class="ft-bot"><p>© 2025 Demir Group Gayrimenkul. Tüm hakları saklıdır.</p><p><a href="#">KVKK</a></p></div>
+</footer>
+
+<script>
+// ── CONFIG — GitHub reponuzun bilgilerini buraya girin ──
+const GITHUB_USER = 'demiremlakgroup';       // örn: 'ahmetdemir'
+const GITHUB_REPO = 'demir-group';            // örn: 'demir-group'
+const JSON_PATH   = 'listings.json';
+
+// Ham JSON URL (token gerekmez, public repo)
+const RAW_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${JSON_PATH}`;
+
+let allListings = [];
+let currentFilter = '';
+let searchMode = false;
+let displayedListings = [];
+let showAll = false;
+let activeTab = 'Satılık';
+
+// ── VERİ YÜKLE ──
+async function loadListings() {
+  try {
+    const res = await fetch(RAW_URL + '?t=' + Date.now());
+    if (!res.ok) throw new Error('fetch failed');
+    allListings = await res.json();
+  } catch(e) {
+    allListings = [];
+  }
+  document.getElementById('stat-count').textContent = allListings.length || '0';
+  renderGrid();
+}
+
+// ── RENDER ──
+function renderGrid() {
+  const grid = document.getElementById('listingsGrid');
+  let list = searchMode ? displayedListings
+    : currentFilter ? allListings.filter(l => l.type === currentFilter)
+    : allListings;
+
+  const shown = showAll ? list : list.slice(0, 6);
+  const moreBtn = document.getElementById('showMoreBtn');
+
+  if (!list.length) {
+    grid.innerHTML = `<div class="l-empty"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><p style="margin-bottom:6px;">${searchMode ? 'Arama sonucu bulunamadı.' : 'Henüz ilan eklenmedi.'}</p><small>${searchMode ? 'Farklı anahtar kelime deneyin.' : 'Admin panelinden ilan ekleyebilirsiniz.'}</small></div>`;
+    moreBtn.style.display = 'none';
+    return;
+  }
+
+  grid.innerHTML = shown.map(l => {
+    const imgHtml = l.images && l.images.length
+      ? `<img src="${l.images[0]}" alt="${l.title}" loading="lazy">`
+      : `<div class="l-img-ph"><svg viewBox="0 0 64 64"><rect x="4" y="4" width="56" height="56" rx="2"/><circle cx="20" cy="22" r="6"/><path d="M60 42 44 26 28 42 20 34 4 44"/></svg></div>`;
+    return `<div class="l-card fi">
+      <div class="l-img">
+        ${imgHtml}
+        <span class="l-badge ${l.status==='Kiralık'?'kiralik':'satilik'}">${l.status}</span>
+      </div>
+      <div class="l-info">
+        <div class="l-price">${l.price} <span>${l.status==='Kiralık'?'/ ay':'TL'}</span></div>
+        <div class="l-title">${l.title}</div>
+        <div class="l-loc"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${[l.district,l.city].filter(Boolean).join(', ')}</div>
+        <div class="l-meta">
+          ${l.rooms?`<div class="l-meta-item"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>${l.rooms}</div>`:''}
+          ${l.sqm?`<div class="l-meta-item"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>${l.sqm} m²</div>`:''}
+          ${l.floor?`<div class="l-meta-item"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>${l.floor}</div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  moreBtn.style.display = list.length > 6 ? 'inline-block' : 'none';
+  moreBtn.textContent = showAll ? '← Daha Az Göster' : 'Tüm İlanları Görüntüle →';
+
+  requestAnimationFrame(() => grid.querySelectorAll('.fi').forEach((el,i)=>setTimeout(()=>el.classList.add('v'),i*60)));
+}
+
+function filterListings(type, btn) {
+  currentFilter = type; showAll = false; searchMode = false;
+  document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+
+function doSearch() {
+  const loc = document.getElementById('s-loc').value.trim().toLowerCase();
+  const type = document.getElementById('s-type').value;
+  displayedListings = allListings.filter(l => {
+    const matchLoc = !loc || (l.city||'').toLowerCase().includes(loc) || (l.district||'').toLowerCase().includes(loc) || (l.title||'').toLowerCase().includes(loc);
+    const matchType = !type || l.type === type;
+    const matchTab = l.status === activeTab;
+    return matchLoc && matchType && matchTab;
+  });
+  searchMode = true; showAll = false;
+  document.getElementById('listings').scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(renderGrid, 300);
+}
+
+function setTab(btn, tab) {
+  activeTab = tab;
+  document.querySelectorAll('.s-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleShowAll() { showAll = !showAll; renderGrid(); }
+
+// ── SCROLL ANIM ──
+const obs = new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('v'),i*70);});},{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}}));
+
+loadListings();
+</script>
+</body>
+</html>
